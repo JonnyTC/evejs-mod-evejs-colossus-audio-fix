@@ -1,0 +1,56 @@
+{
+  "author": {
+    "id": "au-muwl3cbjkr4n",
+    "keyId": "90d34319723f",
+    "name": "JonnyTC"
+  },
+  "category": "修复",
+  "changelog": "",
+  "conflicts": [],
+  "delisted": false,
+  "description": "修「加百列级 78589 完全没有声音」。服务端一个字节不改，改的是客户端 spaceobjectfactory/data.black：给 hull angcol_t1 补上音频发射器。根因是这条船的 hull 定义里 soundEmitters 为空（血月 acol1_t1、索洛托尔 morcol1_t1、抹香鲸 orecol1_t1 都有），所以引擎低噪/跃迁/降启全部静音。v2 修正了 v1 的方向性错误：v1 改的 hulls/angcol_t1.black 客户端根本不加载——sofService.pyj 的唯一入口是 spaceobjectfactory/data.red（编译后即 data.black），且 spaceobjectfactory / hulls/ / data.black 三个串在 code.ccp 全部模块和整个 bin64 里出现 0 次；data.black 的 hull 集合实测 2569 条正好等于索引里 hulls/*.black 的条目数，那些只是编译输入。v2 全程用客户端自己的引擎当格式权威：exefile.exe /py 跑 LoadObject → 从 morcol1_t1 复制 Engine_SFX 发射器与 shipstandard 控制器 → SaveObject → 再 LoadObject 自检，不手搓二进制。安装面三处同步 ResFiles/35 新 blob 与 resfileindex.txt、resfileindex_prefetch.txt，带索引备份、幂等快路径、客户端占用检测，一键回滚。与 evejs-colossus-capital-fit（纯服务端数值）互不重叠。",
+  "displayName": "巨像音效修复：加百列级音频发射器 (Colossus Audio Fix)",
+  "downloadUrls": [
+    {
+      "mirror": "github",
+      "priority": 1,
+      "url": "https://github.com/JonnyTC/evejs-mod-evejs-colossus-audio-fix/releases/download/v2.0.0/evejs-colossus-audio-fix-2.0.0.zip"
+    }
+  ],
+  "evejsVersions": [
+    "0.12.9",
+    "261018.x"
+  ],
+  "featured": false,
+  "highlights": [
+    "模组 ID：`evejs-colossus-audio-fix`",
+    "类型：`kind: loader` / `activation.strategy: loader_rename`",
+    "版本：2.0.0（**v1 方向性错误，已整体重写，见 §1**）",
+    "触摸的客户端文件：`ResFiles/35/…`（新 blob）、`tq/resfileindex.txt`、"
+  ],
+  "history": [],
+  "id": "evejs-colossus-audio-fix",
+  "publishedAt": "2026-10-29",
+  "readme": [
+    "修「加百列级（typeID 78589）完全没有声音」。",
+    "> **状态：已修复。2026-10-29 实机确认加百列有声音（引擎低噪 / 跃迁 / 降启）。**\n>\n> 📖 **完整存档记录见 [`ARCHIVE-colossus-audio-fix.md`](ARCHIVE-colossus-audio-fix.md)**\n> —— 含两次方向性失败的过程、五条证据链、数据结构详解、坑清单、回归清单与可复现命令。\n> 本文是「怎么用」，存档是「为什么是这样、以后怎么不再踩」。",
+    "**服务端一个字节不改。** 改的是客户端 `spaceobjectfactory/data.black` 里\nhull `angcol_t1` 的音频发射器。",
+    "`tq/resfileindex_prefetch.txt`",
+    "---"
+  ],
+  "repo": "https://github.com/JonnyTC/evejs-mod-evejs-colossus-audio-fix",
+  "requiresRestart": true,
+  "sha256": "cf226e08b14f2bd63321537be211e219d2303f1cfb101e6cfa946a666358a4a7",
+  "sizeBytes": 36068,
+  "tags": [
+    "巨像",
+    "Colossus",
+    "加百列",
+    "音效",
+    "data.black",
+    "spaceobjectfactory",
+    "soundEmitters",
+    "客户端资源"
+  ],
+  "version": "2.0.0"
+}
